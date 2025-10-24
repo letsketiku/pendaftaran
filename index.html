@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulir Pendaftaran - LA Crypto</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #00d9ff;
+        --primary-dark: #00a8cc;
+        --secondary: #1a1a2e;
+        --accent: #ff2e63;
+        --dark: #0f1123;
+        --light: #e6f7ff;
+        --gray: #8a8aa3;
+        --gradient: linear-gradient(135deg, #00d9ff 0%, #008cff 100%);
+        --gradient-dark: linear-gradient(135deg, #00a8cc 0%, #0066cc 100%);
+        --box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        --border-radius: 12px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--dark);
+        color: var(--light);
+        line-height: 1.6;
+        background-image: radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 217, 255, 0.05) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(255, 46, 99, 0.05) 0%,
+            transparent 20%
+          );
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* Header Styles */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 24px;
+        color: var(--secondary);
+        box-shadow: var(--box-shadow);
+      }
+      .logo img {
+        width: 70px;
+        height: 70px;
+      }
+      .logo-text {
+        font-size: 2rem;
+        font-weight: 800;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 25px;
+        background: rgba(0, 217, 255, 0.1);
+        color: var(--primary);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s;
+        border: 1px solid rgba(0, 217, 255, 0.3);
+      }
+
+      .back-btn:hover {
+        background: rgba(0, 217, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 217, 255, 0.2);
+      }
+
+      /* Card Styles */
+      .card {
+        background: rgba(26, 26, 46, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        margin-bottom: 30px;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+      }
+
+      .card-header {
+        background: var(--gradient);
+        padding: 20px 30px;
+        color: var(--secondary);
+      }
+
+      .card-header h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      .card-body {
+        padding: 30px;
+      }
+
+      /* Toggle Styles */
+      .form-toggle {
+        display: flex;
+        margin-bottom: 30px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .toggle-option {
+        flex: 1;
+        padding: 18px;
+        text-align: center;
+        background: rgba(26, 26, 46, 0.8);
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .toggle-option:not(.active) {
+        background: rgba(15, 17, 35, 0.8);
+      }
+
+      .toggle-option.active {
+        background: var(--gradient);
+        color: var(--secondary);
+      }
+
+      .toggle-option:not(.active):hover {
+        background: rgba(0, 217, 255, 0.1);
+      }
+
+      .toggle-option::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--primary);
+        transform: scaleX(0);
+        transition: transform 0.3s;
+      }
+
+      .toggle-option.active::after {
+        transform: scaleX(1);
+      }
+
+      /* Form Styles */
+      .form-panel {
+        display: none;
+      }
+
+      .form-panel.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        color: var(--primary);
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-title i {
+        font-size: 1.2rem;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--light);
+      }
+
+      .input-with-icon {
+        position: relative;
+      }
+
+      .input-with-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary);
+      }
+
+      .input-with-icon input,
+      .input-with-icon select,
+      .input-with-icon textarea {
+        padding-left: 45px;
+      }
+
+      select,
+      input,
+      textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(15, 17, 35, 0.7);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        transition: all 0.3s;
+        color: var(--light);
+      }
+
+      select:focus,
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.2);
+        background: rgba(15, 17, 35, 0.9);
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: var(--gradient);
+        color: var(--secondary);
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background: var(--gradient-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 217, 255, 0.3);
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+
+      /* Message Styles */
+      .message {
+        padding: 18px;
+        border-radius: var(--border-radius);
+        margin-bottom: 20px;
+        display: none;
+        border-left: 4px solid;
+      }
+
+      .message.success {
+        background: rgba(0, 217, 255, 0.1);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .message.error {
+        background: rgba(255, 46, 99, 0.1);
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      /* Step and Date Row Styles */
+      .step-row {
+        display: flex;
+        margin-bottom: 15px;
+        align-items: center;
+      }
+
+      .step-label {
+        min-width: 80px;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .step-input {
+        flex: 1;
+      }
+
+      .date-row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .date-row > div {
+        flex: 1;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 30px;
+        color: var(--gray);
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(0, 217, 255, 0.1);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .date-row {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .step-row {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .step-label {
+          margin-bottom: 5px;
+        }
+
+        header {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+
+        .logo-container {
+          justify-content: center;
+        }
+      }
+
+      /* Crypto Animation */
+      .crypto-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .floating-icon {
+        position: absolute;
+        font-size: 24px;
+        color: rgba(0, 217, 255, 0.1);
+        animation: float 20s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) translateX(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-100vh) translateX(100px) rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="crypto-animation" id="cryptoAnimation"></div>
+
+    <div class="container">
+      <header>
+        <div class="logo-container">
+          <div class="logo">
+            <img src="logo.png" alt="LA Crypto Logo" />
+          </div>
+          <div class="logo-text">LA Crypto</div>
+        </div>
+        <a href="https://letsketiku.github.io/lacrypto/" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+          Back to Home
+        </a>
+      </header>
+
+      <div class="card">
+        <div class="card-header">
+          <h1><i class="fas fa-file-signature"></i> Formulir Pendaftaran</h1>
+        </div>
+        <div class="card-body">
+          <p style="margin-bottom: 20px; color: var(--gray)">
+            Pilih jenis formulir yang ingin Anda isi
+          </p>
+
+          <div class="form-toggle">
+            <div class="toggle-option active" data-form="airdrop">
+              <i class="fas fa-gift"></i> Pendaftaran Airdrop
+            </div>
+            <div class="toggle-option" data-form="berita">
+              <i class="fas fa-rocket"></i> Informasi Launching Project Crypto
+            </div>
+          </div>
+
+          <div id="message" class="message"></div>
+
+          <!-- Form Airdrop -->
+          <div id="airdrop-form" class="form-panel active">
+            <form id="airdropForm">
+              <div class="form-section">
+                <h2 class="section-title">
+                  <i class="fas fa-user-cog"></i> Informasi Developer
+                </h2>
+
+                <div class="form-group">
+                  <label for="developer_name">Nama Developer *</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input
+                      type="text"
+                      id="developer_name"
+                      name="developer_name"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="wallet">Wallet Yang Berisi Token/Coin</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-wallet"></i>
+                    <input type="text" id="wallet" name="wallet" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h2 class="section-title">
+                  <i class="fas fa-gift"></i> Informasi Airdrop
+                </h2>
+
+                <div class="form-group">
+                  <label for="name">Nama Airdrop *</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-tag"></i>
+                    <input type="text" id="name" name="name" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="description">Deskripsi Singkat *</label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="full_description">Deskripsi Lengkap</label>
+                  <textarea
+                    id="full_description"
+                    name="full_description"
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="category">Kategori</label>
+                  <select id="category" name="category">
+                    <option value="">Pilih Kategori</option>
+                    <option value="DeFi">DeFi</option>
+                    <option value="NFT">NFT</option>
+                    <option value="GameFi">GameFi</option>
+                    <option value="SocialFi">SocialFi</option>
+                    <option value="Infrastructure">Infrastructure</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="blockchain">Blockchain</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-link"></i>
+                    <input type="text" id="blockchain" name="blockchain" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select id="status" name="status">
+                    <option value="Aktif">Aktif</option>
+                    <option value="Akan Datang">Akan Datang</option>
+                    <option value="Selesai">Selesai</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Estimasi Nilai</label>
+                  <div class="date-row">
+                    <div>
+                      <label for="estimated_value_min">Minimum</label>
+                      <div class="input-with-icon">
+                        <i class="fas fa-coins"></i>
+                        <input
+                          type="text"
+                          id="estimated_value_min"
+                          name="estimated_value_min"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label for="estimated_value_max">Maksimum</label>
+                      <div class="input-with-icon">
+                        <i class="fas fa-coins"></i>
+                        <input
+                          type="text"
+                          id="estimated_value_max"
+                          name="estimated_value_max"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="difficulty">Tingkat Kesulitan</label>
+                  <select id="difficulty" name="difficulty">
+                    <option value="Mudah">Mudah</option>
+                    <option value="Sedang">Sedang</option>
+                    <option value="Sulit">Sulit</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Periode Airdrop</label>
+                  <div class="date-row">
+                    <div>
+                      <label for="start_date">Tanggal Mulai</label>
+                      <div class="input-with-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="start_date" name="start_date" />
+                      </div>
+                    </div>
+                    <div>
+                      <label for="end_date">Tanggal Berakhir</label>
+                      <div class="input-with-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="end_date" name="end_date" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="distribution_date">Tanggal Distribusi</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-calendar-check"></i>
+                    <input
+                      type="date"
+                      id="distribution_date"
+                      name="distribution_date"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="website_url">Website URL</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-globe"></i>
+                    <input type="url" id="website_url" name="website_url" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="twitter_url">Twitter URL</label>
+                  <div class="input-with-icon">
+                    <i class="fab fa-twitter"></i>
+                    <input type="url" id="twitter_url" name="twitter_url" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="discord_url">Discord URL</label>
+                  <div class="input-with-icon">
+                    <i class="fab fa-discord"></i>
+                    <input type="url" id="discord_url" name="discord_url" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="telegram_url">Telegram URL</label>
+                  <div class="input-with-icon">
+                    <i class="fab fa-telegram"></i>
+                    <input type="url" id="telegram_url" name="telegram_url" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="total_participants">Total Peserta</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-users"></i>
+                    <input
+                      type="number"
+                      id="total_participants"
+                      name="total_participants"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="max_participants">Maksimal Peserta</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-user-plus"></i>
+                    <input
+                      type="number"
+                      id="max_participants"
+                      name="max_participants"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="syarat">Syarat & Ketentuan</label>
+                  <textarea id="syarat" name="syarat"></textarea>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h2 class="section-title">
+                  <i class="fas fa-list-ol"></i> Langkah-langkah Penyelesaian
+                </h2>
+
+                <div class="step-row">
+                  <div class="step-label">Step 1</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step1"
+                      name="step1"
+                      placeholder="Langkah pertama"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 2</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step2"
+                      name="step2"
+                      placeholder="Langkah kedua"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 3</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step3"
+                      name="step3"
+                      placeholder="Langkah ketiga"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 4</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step4"
+                      name="step4"
+                      placeholder="Langkah keempat"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 5</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step5"
+                      name="step5"
+                      placeholder="Langkah kelima"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 6</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step6"
+                      name="step6"
+                      placeholder="Langkah keenam"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 7</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step7"
+                      name="step7"
+                      placeholder="Langkah ketujuh"
+                    />
+                  </div>
+                </div>
+
+                <div class="step-row">
+                  <div class="step-label">Step 8</div>
+                  <div class="step-input">
+                    <input
+                      type="text"
+                      id="step8"
+                      name="step8"
+                      placeholder="Langkah kedelapan"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-block">
+                <i class="fas fa-paper-plane"></i> Kirim Formulir Airdrop
+              </button>
+            </form>
+          </div>
+
+          <!-- Form Berita -->
+          <div id="berita-form" class="form-panel">
+            <form id="beritaForm">
+              <div class="form-section">
+                <h2 class="section-title">
+                  <i class="fas fa-rocket"></i> Informasi Launching Project
+                  Crypto
+                </h2>
+
+                <div class="form-group">
+                  <label for="tanggal">Tanggal *</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-calendar-day"></i>
+                    <input type="date" id="tanggal" name="tanggal" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="judul">Judul *</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-heading"></i>
+                    <input type="text" id="judul" name="judul" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="slug">Slug URL</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-link"></i>
+                    <input type="text" id="slug" name="slug" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="kategori">Kategori</label>
+                  <select id="kategori" name="kategori">
+                    <option value="">Pilih Kategori</option>
+                    <option value="DeFi">DeFi</option>
+                    <option value="NFT">NFT</option>
+                    <option value="GameFi">GameFi</option>
+                    <option value="Exchange">Exchange</option>
+                    <option value="Wallet">Wallet</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="isi_singkat">Isi Singkat *</label>
+                  <textarea
+                    id="isi_singkat"
+                    name="isi_singkat"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="isi_lengkap">Isi Lengkap</label>
+                  <textarea id="isi_lengkap" name="isi_lengkap"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="gambar_url">URL Gambar</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-image"></i>
+                    <input type="url" id="gambar_url" name="gambar_url" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="penulis">Penulis</label>
+                  <div class="input-with-icon">
+                    <i class="fas fa-user-edit"></i>
+                    <input type="text" id="penulis" name="penulis" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="status_berita">Status</label>
+                  <select id="status_berita" name="status">
+                    <option value="Draft">Draft</option>
+                    <option value="Published">Published</option>
+                    <option value="Archived">Archived</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-block">
+                <i class="fas fa-paper-plane"></i> Kirim Informasi Launching
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; 2025 LA Crypto. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Create floating crypto icons
+        const cryptoAnimation = document.getElementById("cryptoAnimation");
+        const icons = [
+          "fa-bitcoin",
+          "fa-ethereum",
+          "fa-coins",
+          "fa-gem",
+          "fa-rocket",
+        ];
+
+        for (let i = 0; i < 15; i++) {
+          const icon = document.createElement("i");
+          icon.className = `floating-icon fas ${
+            icons[Math.floor(Math.random() * icons.length)]
+          }`;
+          icon.style.left = `${Math.random() * 100}%`;
+          icon.style.animationDelay = `${Math.random() * 20}s`;
+          icon.style.fontSize = `${Math.random() * 20 + 10}px`;
+          cryptoAnimation.appendChild(icon);
+        }
+
+        // Toggle between forms
+        const toggleOptions = document.querySelectorAll(".toggle-option");
+        const formPanels = document.querySelectorAll(".form-panel");
+
+        toggleOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            const targetForm = this.getAttribute("data-form");
+
+            // Update active toggle
+            toggleOptions.forEach((opt) => opt.classList.remove("active"));
+            this.classList.add("active");
+
+            // Show target form
+            formPanels.forEach((panel) => {
+              panel.classList.remove("active");
+              if (panel.id === `${targetForm}-form`) {
+                panel.classList.add("active");
+              }
+            });
+
+            // Clear message
+            document.getElementById("message").style.display = "none";
+          });
+        });
+
+        // Set today's date as default for tanggal in berita form
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("tanggal").value = today;
+
+        // Handle airdrop form submission - SESUAI DENGAN GAS FINAL
+        document
+          .getElementById("airdropForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Collect form data - SESUAI DENGAN STRUKTUR GAS FINAL
+            const formData = {
+              type: "airdrop",
+              developer: {
+                developer_name: document.getElementById("developer_name").value,
+                email: document.getElementById("email").value,
+                wallet: document.getElementById("wallet").value,
+              },
+              airdrop: {
+                name: document.getElementById("name").value,
+                description: document.getElementById("description").value,
+                status: document.getElementById("status").value,
+                category: document.getElementById("category").value,
+                blockchain: document.getElementById("blockchain").value,
+                estimated_value_min: document.getElementById(
+                  "estimated_value_min"
+                ).value,
+                estimated_value_max: document.getElementById(
+                  "estimated_value_max"
+                ).value,
+                difficulty: document.getElementById("difficulty").value,
+                start_date: document.getElementById("start_date").value,
+                end_date: document.getElementById("end_date").value,
+                website_url: document.getElementById("website_url").value,
+                twitter_url: document.getElementById("twitter_url").value,
+                discord_url: document.getElementById("discord_url").value,
+                telegram_url: document.getElementById("telegram_url").value,
+                total_participants:
+                  document.getElementById("total_participants").value,
+                max_participants:
+                  document.getElementById("max_participants").value,
+                created_at: new Date().toISOString(),
+                updated_at: "",
+                full_description:
+                  document.getElementById("full_description").value,
+                distribution_date:
+                  document.getElementById("distribution_date").value,
+                syarat: document.getElementById("syarat").value,
+              },
+              langkah: {
+                step1: document.getElementById("step1").value,
+                step2: document.getElementById("step2").value,
+                step3: document.getElementById("step3").value,
+                step4: document.getElementById("step4").value,
+                step5: document.getElementById("step5").value,
+                step6: document.getElementById("step6").value,
+                step7: document.getElementById("step7").value,
+                step8: document.getElementById("step8").value,
+              },
+            };
+
+            console.log("Data Airdrop yang dikirim:", formData);
+
+            // Kirim data ke GAS FINAL
+            submitToGAS(formData);
+          });
+
+        // Handle berita form submission - SESUAI DENGAN GAS FINAL
+        document
+          .getElementById("beritaForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Collect form data - SESUAI DENGAN STRUKTUR GAS FINAL
+            const formData = {
+              type: "berita",
+              tanggal: document.getElementById("tanggal").value,
+              judul: document.getElementById("judul").value,
+              slug: document.getElementById("slug").value,
+              isi_singkat: document.getElementById("isi_singkat").value,
+              isi_lengkap: document.getElementById("isi_lengkap").value,
+              gambar_url: document.getElementById("gambar_url").value,
+              penulis: document.getElementById("penulis").value,
+              kategori: document.getElementById("kategori").value,
+              status: document.getElementById("status_berita").value,
+            };
+
+            console.log("Data Berita yang dikirim:", formData);
+
+            // Kirim data ke GAS FINAL
+            submitToGAS(formData);
+          });
+
+        // Function to submit form data to GAS FINAL - DIPERBAIKI
+        function submitToGAS(data) {
+          const messageEl = document.getElementById("message");
+          messageEl.style.display = "none";
+
+          // Show loading state
+          const submitBtn = document.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+          submitBtn.disabled = true;
+
+          // GAS FINAL URL
+          const scriptURL =
+            "https://script.google.com/macros/s/AKfycbyGrzUgQeYTnS8lRNnxabXUhmAVrpwoPGDDcnq_fX7yEqmCE6NiYDfBaDwP4cVKgYlbXw/exec";
+
+          // Gunakan FormData untuk menghindari CORS issues (sesuai GAS FINAL)
+          const formData = new FormData();
+          formData.append("payload", JSON.stringify(data));
+
+          fetch(scriptURL, {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.text();
+            })
+            .then((text) => {
+              try {
+                const result = JSON.parse(text);
+                if (result.success) {
+                  showMessage(
+                    result.message || "Data berhasil dikirim!",
+                    "success"
+                  );
+                  document.querySelector(".form-panel.active form").reset();
+                } else {
+                  showMessage(result.message || "Terjadi kesalahan.", "error");
+                }
+              } catch (e) {
+                // Jika response bukan JSON, anggap berhasil
+                showMessage("Data berhasil dikirim!", "success");
+                document.querySelector(".form-panel.active form").reset();
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              showMessage(
+                "Terjadi kesalahan saat mengirim data: " + error.message,
+                "error"
+              );
+            })
+            .finally(() => {
+              // Restore button state
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+            });
+        }
+
+        // Function to show message
+        function showMessage(text, type) {
+          const messageEl = document.getElementById("message");
+          messageEl.textContent = text;
+          messageEl.className = `message ${type}`;
+          messageEl.style.display = "block";
+
+          // Scroll to message
+          messageEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      });
+    </script>
+  </body>
+</html>
